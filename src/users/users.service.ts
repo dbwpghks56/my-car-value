@@ -22,4 +22,20 @@ export class UsersService {
 
         return (await this.userRepository.save(user)).toResponse();
     }
+
+    async findAll(): Promise<UserResponseDto[]> {
+        return (await this.userRepository.find()).map(user => user.toResponse());
+    }
+
+    async findByEmail(email: string): Promise<UserResponseDto> {
+        return (await this.userRepository.findOne({
+            where: {email: email}
+        })).toResponse();
+    }
+
+    async findById(id: number): Promise<UserResponseDto> {
+        return (await this.userRepository.findOne({
+            where: { id: id }
+        })).toResponse();
+    }
 }

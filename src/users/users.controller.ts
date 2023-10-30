@@ -1,4 +1,4 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, Get, Post, Param, Query } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/request/create-user.dto';
 import { User } from './domain/user.entity';
@@ -15,5 +15,20 @@ export class UsersController {
         console.log(createUseDto);
         
         return this.userService.create(createUseDto);
+    }
+
+    @Get("/all")
+    findUserAll(): Promise<UserResponseDto[]> {
+        return this.userService.findAll();
+    }
+
+    @Get("/:id")
+    findUserById(@Param() id: number): Promise<UserResponseDto> {
+        return this.userService.findById(id);
+    }
+
+    @Get()
+    findUserByEmail(@Query('email') email: string): Promise<UserResponseDto> {
+        return this.userService.findByEmail(email);
     }
 }
