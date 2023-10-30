@@ -5,7 +5,7 @@ import {Entity, Column, PrimaryGeneratedColumn} from 'typeorm';
     name: 'tb_user'
 })
 export class User extends BaseEntity {
-    @PrimaryGeneratedColumn()
+    @PrimaryGeneratedColumn('identity')
     id: number;
 
     @Column()
@@ -13,4 +13,10 @@ export class User extends BaseEntity {
 
     @Column()
     password: string;
+
+    /**
+     * @Column(() => BaseEntity)
+     * base: BaseEntity
+     * 로도 가능
+     */
 }
