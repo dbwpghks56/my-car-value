@@ -5,6 +5,7 @@ import { AppService } from './app.service';
 import { UsersModule } from './users/users.module';
 import { ReportsModule } from './reports/reports.module';
 import { User } from './users/domain/user.entity';
+import { Report } from './reports/domain/report.entity';
 
 @Module({
   imports: [UsersModule, ReportsModule, TypeOrmModule.forRoot({
@@ -14,7 +15,7 @@ import { User } from './users/domain/user.entity';
     username: 'root',
     password: 'mydb123',
     database: 'postgres',
-    entities: [User],
+    entities: [User, Report],
     synchronize: true
   })],
   controllers: [AppController],
