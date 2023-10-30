@@ -1,5 +1,7 @@
 import { BaseEntity } from 'src/common/domain/base.entity';
 import {Entity, Column, PrimaryGeneratedColumn} from 'typeorm';
+import { UserResponseDto } from '../dto/response/user.response';
+import { Builder } from 'builder-pattern';
 
 @Entity({
     name: 'tb_user'
@@ -19,4 +21,14 @@ export class User extends BaseEntity {
      * base: BaseEntity
      * 로도 가능
      */
+
+    toResponse(): UserResponseDto {
+        return Builder<UserResponseDto>()
+        .id(this.id)
+        .email(this.email)
+        .status(this.status)
+        .createdTime(this.createdTime)
+        .updatedTime(this.updatedTime)
+        .build();
+    } 
 }

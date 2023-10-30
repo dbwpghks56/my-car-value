@@ -1,7 +1,9 @@
 import { Column, CreateDateColumn, UpdateDateColumn } from "typeorm";
 
 export class BaseEntity {
-    @Column()
+    @Column({
+        default: false
+    })
     status: boolean;
 
     @CreateDateColumn()
