@@ -18,6 +18,7 @@ export class UsersService {
      * @returns 
      */
     async create(createUserDto: CreateUserDto): Promise<UserResponseDto> {
+        // 이렇게 create 로 객체를 만들어야 Hooks ( Afterinsert 등)이 작동한다.
         const user = this.userRepository.create(createUserDto);
 
         return (await this.userRepository.save(user)).toResponse();
