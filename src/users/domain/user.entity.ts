@@ -2,6 +2,7 @@ import { BaseEntity } from 'src/common/domain/base.entity';
 import { Entity, Column, PrimaryGeneratedColumn, AfterInsert, AfterRemove, AfterUpdate } from 'typeorm';
 import { UserResponseDto } from '../dto/response/user.response';
 import { Builder } from 'builder-pattern';
+import { UpdateUserDto } from '../dto/request/update-user.dto';
 
 @Entity({
     name: 'tb_user'

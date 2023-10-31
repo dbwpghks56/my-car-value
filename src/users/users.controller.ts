@@ -1,8 +1,9 @@
-import { Body, Controller, Get, Post, Param, Query } from '@nestjs/common';
+import { Body, Controller, Get, Post, Param, Query, Patch, Delete } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/request/create-user.dto';
 import { User } from './domain/user.entity';
 import { UserResponseDto } from './dto/response/user.response';
+import { UpdateUserDto } from './dto/request/update-user.dto';
 
 @Controller('auth')
 export class UsersController {
@@ -30,5 +31,20 @@ export class UsersController {
     @Get()
     findUserByEmail(@Query('email') email: string): Promise<UserResponseDto> {
         return this.userService.findByEmail(email);
+    }
+
+    @Patch("/:id")
+    update(
+        @Param() id: number,
+        @Body() attr: Partial<UpdateUserDto>
+    ): Promise<UserResponseDto> {
+        return this.userService.update(id, attr)
+    }
+
+    @Delete("/:id")
+    remove(
+        @Param() id: number
+    ): Promise<UserResponseDto> {
+        return this.userService.remove(id);
     }
 }
