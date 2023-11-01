@@ -24,8 +24,8 @@ export class UsersController {
     }
 
     @Get("/:id")
-    findUserById(@Param() id: number): Promise<UserResponseDto> {
-        return this.userService.findById(id);
+    findUserById(@Param('id') id: string): Promise<UserResponseDto> {
+        return this.userService.findById(+id);
     }
 
     @Get()
@@ -35,16 +35,16 @@ export class UsersController {
 
     @Patch("/:id")
     update(
-        @Param() id: number,
+        @Param('id') id: string,
         @Body() attr: Partial<UpdateUserDto>
     ): Promise<UserResponseDto> {
-        return this.userService.update(id, attr)
+        return this.userService.update(+id, attr)
     }
 
     @Delete("/:id")
     remove(
-        @Param() id: number
+        @Param('id') id: string
     ): Promise<UserResponseDto> {
-        return this.userService.remove(id);
+        return this.userService.remove(+id);
     }
 }

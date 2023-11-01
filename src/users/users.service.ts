@@ -36,13 +36,14 @@ export class UsersService {
     }
 
     async findById(id: number): Promise<UserResponseDto> {
+        console.log(id);
         return (await this.userRepository.findOne({
             where: { id: id }
         })).toResponse();
     }
 
     async update( id: number, attr: Partial<UpdateUserDto> ): Promise<UserResponseDto> {
-        const userInstance: User = await this.userRepository.findOne(({where: {id: id}})).catch(() => {throw new NotFoundException()});
+        const userInstance: User = await this.userRepository.findOne(({where: {id: +id}})).catch(() => {throw new NotFoundException()});
         
         Object.assign(userInstance, attr);
 
