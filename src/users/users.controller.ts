@@ -5,6 +5,7 @@ import { CreateUserDto } from './dto/request/create-user.dto';
 import { User } from './domain/user.entity';
 import { UserResponseDto } from './dto/response/user.response';
 import { UpdateUserDto } from './dto/request/update-user.dto';
+import { SerializeInterceptor } from 'src/interceptors/serialize.interceptor';
 
 @Controller('auth')
 export class UsersController {
@@ -25,7 +26,7 @@ export class UsersController {
     }
 
     @Get("/:id")
-    @UseInterceptors(ClassSerializerInterceptor)
+    @UseInterceptors(SerializeInterceptor)
     findUserById(@Param('id') id: string): Promise<UserResponseDto> {
         return this.userService.findById(+id);
     }
