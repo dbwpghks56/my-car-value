@@ -3,9 +3,10 @@ import { Observable } from "rxjs";
 import {map} from 'rxjs/operators';
 import { plainToClass } from "class-transformer";
 import { UserResponseDto } from "src/users/dto/response/user.response";
+import { BasicResponse } from "src/common/dto/response/response.dto";
 
 interface ClassConstructor {
-    new (...args: any[]): {}
+    new (...args: BasicResponse[]): {}
 }
 
 export function Serialize(dto: ClassConstructor) {
