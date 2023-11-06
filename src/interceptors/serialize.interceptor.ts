@@ -4,11 +4,19 @@ import {map} from 'rxjs/operators';
 import { plainToClass } from "class-transformer";
 import { UserResponseDto } from "src/users/dto/response/user.response";
 
+export function Serialize(dto: any) {
+    return UseInterceptors(new SerializeInterceptor(dto));
+}
+
 export class SerializeInterceptor implements NestInterceptor {
+    constructor(private readonly dto: any) {
+
+    }
+
     intercept(context: ExecutionContext, next: CallHandler<any>): Observable<any> | Promise<Observable<any>> {
         return next.handle().pipe(
             map((data: any) => {
-                return plainToClass(UserResponseDto, data, {
+                return plainToClass(this.dto, data, {
                     excludeExtraneousValues: true
                 });
             })
