@@ -8,6 +8,7 @@ import { UpdateUserDto } from './dto/request/update-user.dto';
 import { Serialize } from 'src/interceptors/serialize.interceptor';
 
 @Controller('auth')
+@Serialize(UserResponseDto)
 export class UsersController {
     constructor(
         private readonly userService: UsersService
@@ -27,7 +28,7 @@ export class UsersController {
 
     @Get("/:id")
     // @UseInterceptors(new SerializeInterceptor(UserResponseDto))
-    @Serialize(UserResponseDto) // custom decorater
+    // @Serialize(UserResponseDto) // custom decorater
     findUserById(@Param('id') id: string): Promise<User> {
         return this.userService.findById(+id);
     }
