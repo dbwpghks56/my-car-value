@@ -27,7 +27,7 @@ export class UsersController {
 
     @Get("/:id")
     @UseInterceptors(SerializeInterceptor)
-    findUserById(@Param('id') id: string): Promise<UserResponseDto> {
+    findUserById(@Param('id') id: string): Promise<User> {
         return this.userService.findById(+id);
     }
 

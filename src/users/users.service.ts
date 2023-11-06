@@ -35,11 +35,11 @@ export class UsersService {
         })).toResponse();
     }
 
-    async findById(id: number): Promise<UserResponseDto> {
+    findById(id: number): Promise<User> {
         console.log(id);
-        return (await this.userRepository.findOne({
+        return this.userRepository.findOne({
             where: { id: id }
-        })).toResponse();
+        });
     }
 
     async update( id: number, attr: Partial<UpdateUserDto> ): Promise<UserResponseDto> {
