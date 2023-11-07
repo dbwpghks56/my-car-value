@@ -3,12 +3,12 @@ import { Body, Controller, Get, Post, Param, Query, Patch, Delete,
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/request/create-user.dto';
 import { User } from './domain/user.entity';
-import { UserResponseDto } from './dto/response/user.response';
 import { UpdateUserDto } from './dto/request/update-user.dto';
 import { Serialize } from 'src/interceptors/serialize.interceptor';
+import { UserResponseDto } from './dto/response/user.response';
 
 @Controller('auth')
-@Serialize(UserResponseDto)
+@Serialize<UserResponseDto>(UserResponseDto)
 export class UsersController {
     constructor(
         private readonly userService: UsersService
