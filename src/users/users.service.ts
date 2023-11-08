@@ -18,21 +18,21 @@ export class UsersService {
      * @param createUserDto 
      * @returns 
      */
-    async create(createUserDto: CreateUserDto): Promise<UserResponseDto> {
+    create(createUserDto: CreateUserDto): Promise<User> {
         // 이렇게 create 로 객체를 만들어야 Hooks ( Afterinsert 등)이 작동한다.
         const user = this.userRepository.create(createUserDto);
 
-        return (await this.userRepository.save(user)).toResponse();
+        return this.userRepository.save(user);
     }
 
-    async findAll(): Promise<UserResponseDto[]> {
-        return (await this.userRepository.find()).map(user => user.toResponse());
+    findAll(): Promise<User[]> {
+        return this.userRepository.find();
     }
 
-    async findByEmail(email: string): Promise<UserResponseDto> {
-        return (await this.userRepository.findOne({
+    findByEmail(email: string): Promise<User> {
+        return this.userRepository.findOne({
             where: {email: email}
-        })).toResponse();
+        });
     }
 
     findById(id: number): Promise<User> {
@@ -42,17 +42,17 @@ export class UsersService {
         });
     }
 
-    async update( id: number, attr: Partial<UpdateUserDto> ): Promise<UserResponseDto> {
-        const userInstance: User = await this.userRepository.findOne(({where: {id: +id}})).catch(() => {throw new NotFoundException()});
-        
+    async update(id: number, attr: Partial<UpdateUserDto>): Promise<User> {
+        const userInstance: User = await this.findById(id);
+
         Object.assign(userInstance, attr);
 
-        return (await this.userRepository.save(userInstance)).toResponse();
+        return this.userRepository.save(userInstance);
     }
 
-    async remove(id: number): Promise<UserResponseDto> {
-        const userInstance: User = await this.userRepository.findOne(({ where: { id: id } })).catch(() => { throw new NotFoundException() });
+    async remove(id: number): Promise<User> {
+        const userInstance: User = await this.findById(id);
 
-        return (await this.userRepository.remove(userInstance)).toResponse();
+        return this.userRepository.remove(userInstance);
     }
 }

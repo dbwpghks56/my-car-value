@@ -15,14 +15,14 @@ export class UsersController {
     ) {}
 
     @Post("/signup")
-    createUser(@Body() createUseDto: CreateUserDto): Promise<UserResponseDto> {
+    createUser(@Body() createUseDto: CreateUserDto): Promise<User> {
         console.log(createUseDto);
         
         return this.userService.create(createUseDto);
     }
 
     @Get("/all")
-    findUserAll(): Promise<UserResponseDto[]> {
+    findUserAll(): Promise<User[]> {
         return this.userService.findAll();
     }
 
@@ -34,14 +34,14 @@ export class UsersController {
     }
 
     @Get()
-    findUserByEmail(@Query('email') email: string): Promise<UserResponseDto> {
+    findUserByEmail(@Query('email') email: string): Promise<User> {
         return this.userService.findByEmail(email);
     }
 
     @Patch("/:id")
     update(
         @Param('id') id: string,
-        @Body() attr: Partial<UpdateUserDto>
+        @Body() attr: Partial<User>
     ): Promise<UserResponseDto> {
         return this.userService.update(+id, attr)
     }
@@ -49,7 +49,7 @@ export class UsersController {
     @Delete("/:id")
     remove(
         @Param('id') id: string
-    ): Promise<UserResponseDto> {
+    ): Promise<User> {
         return this.userService.remove(+id);
     }
 }
