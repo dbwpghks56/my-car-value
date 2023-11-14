@@ -23,6 +23,11 @@ export class UsersController {
         return this.authService.signup(createUseDto.email, createUseDto.password);
     }
 
+    @Post('/signin')
+    signin(@Body() loginBody: CreateUserDto) {
+        return this.authService.signIn(loginBody.email, loginBody.password);
+    }
+
     @Get("/all")
     findUserAll(): Promise<User[]> {
         return this.userService.findAll();
