@@ -7,6 +7,7 @@ import { UpdateUserDto } from './dto/request/update-user.dto';
 import { Serialize } from 'src/interceptors/serialize.interceptor';
 import { AuthService } from './auth.service';
 import { UserResponseDto } from './dto/response/user.response';
+import { CurrentUser } from './decorators/current-user.decorator';
 
 @Controller('auth')
 @Serialize<UserResponseDto>(UserResponseDto)
@@ -34,8 +35,9 @@ export class UsersController {
     }
 
     @Get('/whoami')
-    whoAmI(@Session() session: any): Promise<User> {
-        return this.userService.findById(session.userId);
+    whoAmI(@CurrentUser() user: User) {
+
+        return user;
     }
 
     @Get('/logout')
