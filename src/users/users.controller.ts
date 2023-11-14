@@ -5,20 +5,22 @@ import { CreateUserDto } from './dto/request/create-user.dto';
 import { User } from './domain/user.entity';
 import { UpdateUserDto } from './dto/request/update-user.dto';
 import { Serialize } from 'src/interceptors/serialize.interceptor';
+import { AuthService } from './auth.service';
 import { UserResponseDto } from './dto/response/user.response';
 
 @Controller('auth')
 @Serialize<UserResponseDto>(UserResponseDto)
 export class UsersController {
     constructor(
-        private readonly userService: UsersService
+        private readonly userService: UsersService,
+        private readonly authService: AuthService
     ) {}
 
     @Post("/signup")
     createUser(@Body() createUseDto: CreateUserDto): Promise<User> {
         console.log(createUseDto);
         
-        return this.userService.create(createUseDto);
+        return this.authService.signup(createUseDto.email, createUseDto.password);
     }
 
     @Get("/all")
