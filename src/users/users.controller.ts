@@ -1,5 +1,5 @@
 import { Body, Controller, Get, Post, Param, Query, Patch, Delete, 
-    NotFoundException, UseInterceptors, ClassSerializerInterceptor, Session} from '@nestjs/common';
+    NotFoundException, ClassSerializerInterceptor, Session,} from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/request/create-user.dto';
 import { User } from './domain/user.entity';
@@ -10,7 +10,7 @@ import { UserResponseDto } from './dto/response/user.response';
 import { CurrentUser } from './decorators/current-user.decorator';
 
 @Controller('auth')
-@Serialize<UserResponseDto>(UserResponseDto)
+@Serialize(UserResponseDto)
 export class UsersController {
     constructor(
         private readonly userService: UsersService,
