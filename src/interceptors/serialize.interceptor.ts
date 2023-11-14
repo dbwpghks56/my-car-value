@@ -8,8 +8,8 @@ import { BasicResponse } from "src/common/dto/response/response.dto";
 /**
  * 
  */
-interface ClassConstructor<T extends BasicResponse> {
-    new (...args: T[]): {}
+interface ClassConstructor {
+    new (...args: []): {}
 }
 
 /**
@@ -17,15 +17,15 @@ interface ClassConstructor<T extends BasicResponse> {
  * @param dto 
  * @returns 
  */
-export function Serialize<T extends BasicResponse>(dto: ClassConstructor<T>) {
+export function Serialize(dto: ClassConstructor) {
     return UseInterceptors(new SerializeInterceptor(dto));
 }
 
 /**
  * 
  */
-export class SerializeInterceptor<T extends BasicResponse> implements NestInterceptor {
-    constructor(private readonly dto: ClassConstructor<T>) {
+export class SerializeInterceptor implements NestInterceptor {
+    constructor(private readonly dto: any) {
 
     }
 
