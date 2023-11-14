@@ -37,6 +37,10 @@ export class UsersService {
 
     findById(id: number): Promise<User> {
         console.log(id);
+        if ( !id) {
+            return null;
+        }
+        // findOne 의 경우 null 로 찾으려고 하면 첫번째 값을 보내준다... 도대체 왜..?
         return this.userRepository.findOne({
             where: { id: id }
         });

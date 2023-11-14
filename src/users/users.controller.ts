@@ -33,16 +33,34 @@ export class UsersController {
         return session.color;
     }
 
+    @Get('/whoami')
+    whoAmI(@Session() session: any): Promise<User> {
+        return this.userService.findById(session.userId);
+    }
+
+    @Get('/logout')
+    signOut(@Session() session:any) {
+        session.userId = null;
+    }
+
     @Post("/signup")
-    createUser(@Body() createUseDto: CreateUserDto): Promise<User> {
+    async createUser(@Body() createUseDto: CreateUserDto, @Session() session: any): Promise<User> {
         console.log(createUseDto);
         
-        return this.authService.signup(createUseDto.email, createUseDto.password);
+        const user = await this.authService.signup(createUseDto.email, createUseDto.password);
+
+        session.userId = user.id;
+
+        return user;
     }
 
     @Post('/signin')
-    signin(@Body() loginBody: CreateUserDto) {
-        return this.authService.signIn(loginBody.email, loginBody.password);
+    async signin(@Body() loginBody: CreateUserDto, @Session() session: any): Promise<User> {
+        const user = await this.authService.signIn(loginBody.email, loginBody.password);
+
+        session.userId = user.id;
+
+        return user;
     }
 
     @Get("/all")
