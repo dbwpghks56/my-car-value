@@ -1,5 +1,6 @@
 import { BaseEntity } from "src/common/domain/base.entity";
-import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
+import { User } from "src/users/domain/user.entity";
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from "typeorm";
 
 @Entity({
     name: 'tb_report'
@@ -28,4 +29,7 @@ export class Report extends BaseEntity {
 
     @Column()
     mileage: number;
+
+    @ManyToOne(() => User, (user) => user.reports)
+    user: User;
 }

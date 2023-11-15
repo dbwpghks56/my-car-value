@@ -1,8 +1,9 @@
 import { BaseEntity } from 'src/common/domain/base.entity';
-import { Entity, Column, PrimaryGeneratedColumn, AfterInsert, AfterRemove, AfterUpdate } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, AfterInsert, AfterRemove, AfterUpdate, OneToMany } from 'typeorm';
 import { UserResponseDto } from '../dto/response/user.response';
 import { Builder } from 'builder-pattern';
 import { Exclude } from 'class-transformer';
+import { Report } from 'src/reports/domain/report.entity';
 
 @Entity({
     name: 'tb_user'
@@ -16,6 +17,9 @@ export class User extends BaseEntity {
 
     @Column()
     password: string;
+
+    @OneToMany(() => Report, (report) => report.user)
+    reports: Report[];
 
     @AfterInsert()
     logInsert() {

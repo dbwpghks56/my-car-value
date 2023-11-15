@@ -3,6 +3,8 @@ import { ReportsService } from './reports.service';
 import { CreateReportDto } from './dto/request/create-report.dto';
 import { Report } from './domain/report.entity';
 import { AuthGuard } from 'src/guards/auth.guard';
+import { CurrentUser } from 'src/users/decorators/current-user.decorator';
+import { User } from 'src/users/domain/user.entity';
 
 @Controller('reports')
 export class ReportsController {
@@ -14,8 +16,9 @@ export class ReportsController {
     @UseGuards(AuthGuard)
     createReport(
         @Body() body: CreateReportDto,
+        @CurrentUser() user: User
     ): Promise<Report> {
-        return this.reportService.create(body);
+        return this.reportService.create(body, user);
     }
 
     @Get()
