@@ -14,7 +14,12 @@ export class ReportsService {
     create(
         createReport: CreateReportDto
     ): Promise<Report> {
-        
-        return null;
+        const report = this.reportRepository.create(createReport);
+
+        return this.reportRepository.save(report);
+    }
+
+    findAllReports():Promise<Report[]> {
+        return this.reportRepository.find();
     }
 }

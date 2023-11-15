@@ -17,4 +17,10 @@ export class ReportsController {
     ): Promise<Report> {
         return this.reportService.create(body);
     }
+
+    @Get()
+    findAllReports(): Promise<Report[]> {
+        return this.reportService.findAllReports();
+    }
+
 }
