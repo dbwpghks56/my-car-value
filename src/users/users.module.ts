@@ -17,6 +17,8 @@ import { CurrentUserInterceptor } from './interceptors/current-user.interceptor'
     { // 전역으로 설정
       provide: APP_INTERCEPTOR,
       useClass: CurrentUserInterceptor
-    }]
+    }
+  ],
+  exports: [UsersService]
 })
 export class UsersModule {}
