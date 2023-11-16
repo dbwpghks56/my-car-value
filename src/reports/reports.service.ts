@@ -1,9 +1,10 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { Report } from './domain/report.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CreateReportDto } from './dto/request/create-report.dto';
 import { User } from 'src/users/domain/user.entity';
+import { ApproveReportDto } from './dto/request/approve-report.dto';
 
 @Injectable()
 export class ReportsService {
@@ -23,5 +24,21 @@ export class ReportsService {
 
     findAllReports():Promise<Report[]> {
         return this.reportRepository.find();
+    }
+
+    async approveReport(
+        id: number,
+        approveReport: ApproveReportDto
+    ): Promise<Report> {
+        const report = await this.reportRepository.findOne({where: {id: id}});
+        if(!report) {
+            throw new NotFoundException('없는 Report 인데?');
+        }
+
+        report.status = approveReport.approve;
+        console.log(approveReport.approve);
+        console.log(report);
+
+        return this.reportRepository.save(report);
     }
 }
