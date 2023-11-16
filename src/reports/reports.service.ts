@@ -36,8 +36,6 @@ export class ReportsService {
         }
 
         report.status = approveReport.approve;
-        console.log(approveReport.approve);
-        console.log(report);
 
         return this.reportRepository.save(report);
     }
