@@ -5,8 +5,11 @@ import { Report } from './domain/report.entity';
 import { AuthGuard } from 'src/guards/auth.guard';
 import { CurrentUser } from 'src/users/decorators/current-user.decorator';
 import { User } from 'src/users/domain/user.entity';
+import { ReportResponseDto } from './dto/response/response.report';
+import { Serialize } from 'src/interceptors/serialize.interceptor';
 
 @Controller('reports')
+@Serialize(ReportResponseDto)
 export class ReportsController {
     constructor(
         private readonly reportService: ReportsService
