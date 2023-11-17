@@ -5,6 +5,7 @@ import { Repository } from 'typeorm';
 import { CreateReportDto } from './dto/request/create-report.dto';
 import { User } from 'src/users/domain/user.entity';
 import { ApproveReportDto } from './dto/request/approve-report.dto';
+import { GetEstimateDto } from './dto/request/get-estimate.dto';
 
 @Injectable()
 export class ReportsService {
@@ -38,5 +39,21 @@ export class ReportsService {
         report.status = approveReport.approve;
 
         return this.reportRepository.save(report);
+    }
+
+    createEstimate({ make, model, lng, lat, year, mileage }: GetEstimateDto) {
+        return this.reportRepository
+            .createQueryBuilder()
+            .select('AVG(price)', 'price')
+            .where('make = :make', { make })
+            .andWhere('model = :model', { model })
+            .andWhere('lng - :lng BETWEEN -5 AND 5', { lng })
+            .andWhere('lat - :lat BETWEEN -5 AND 5', { lat })
+            .andWhere('year - :year BETWEEN -3 AND 3', { year })
+            .andWhere('status IS TRUE')
+            .orderBy('ABS(mileage - :mileage)', 'DESC')
+            .setParameters({ mileage })
+            .limit(3)
+            .getRawOne();
     }
 }

@@ -44,8 +44,8 @@ export class ReportsController {
     @Get('/estimate')
     getEstimate(
         @Query() query: GetEstimateDto
-    ): number {
-        return null;
+    ) {
+        return this.reportService.createEstimate(query);
     }
 
 }
