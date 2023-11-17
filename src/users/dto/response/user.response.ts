@@ -7,4 +7,7 @@ export class UserResponseDto extends BasicResponse {
 
     @Expose()
     email: string;
+
+    @Expose()
+    admin: boolean;
 }
